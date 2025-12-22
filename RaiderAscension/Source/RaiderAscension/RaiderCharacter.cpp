@@ -10,7 +10,7 @@ ARaiderCharacter::ARaiderCharacter()
     // Create the TextRenderComponent
     RaiderGradeText = CreateDefaultSubobject<UTextRenderComponent>(TEXT("RaiderGradeText"));
     RaiderGradeText->SetupAttachment(RootComponent);
-    RaiderGradeText->SetRelativeLocation(FVector(0.f, 0.f, 100.f)); // Above head
+    RaiderGradeText->SetRelativeLocation(FVector(0.f, 0.f, 100.f));
     RaiderGradeText->SetHorizontalAlignment(EHTA_Center);
     RaiderGradeText->SetText(FText::FromString("Loading..."));
 
@@ -35,6 +35,7 @@ void ARaiderCharacter::BeginPlay()
         if (ARaiderPlayerState* RPS = Cast<ARaiderPlayerState>(PS))
         {
             FString GradeString;
+
             switch (RPS->RaiderGrade)
             {
             case ERaiderGrade::Fledgling: GradeString = "Fledgling"; break;
@@ -46,7 +47,19 @@ void ARaiderCharacter::BeginPlay()
             default: GradeString = "Unknown"; break;
             }
 
-            RaiderGradeText->SetText(FText::FromString(GradeString));
+            // Update the floating text component above the character
+            if (RaiderGradeText)
+            {
+                RaiderGradeText->SetText(FText::FromString(GradeString));
+            }
+
+            // Also show debug text on the screen (red for visibility)
+            if (GEngine)
+            {
+                GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red,
+                    FString::Printf(TEXT("%s's Grade: %s"), *GetName(), *GradeString));
+            }
         }
     }
 }
+
