@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "RaiderPlayerState.h"
+#include "RaiderAscension/RaiderPlayerState.h"
 #include "RaiderGameMode.generated.h"
 
 UCLASS()

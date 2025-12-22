@@ -26,7 +26,7 @@ public:
     UPROPERTY(BlueprintReadOnly, Replicated, Category = "Raider")
     ERaiderGrade RaiderGrade;
 
-protected:
+public:
     virtual void BeginPlay() override;
 
     void AssignRandomRaiderGrade();
