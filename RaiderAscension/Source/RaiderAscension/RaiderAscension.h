@@ -1,6 +1,8 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Epic Games, Inc. All Rights Reserved.
 
 #pragma once
 
 #include "CoreMinimal.h"
 
+/** Main log category used across the project */
+DECLARE_LOG_CATEGORY_EXTERN(LogRaiderAscension, Log, All);
