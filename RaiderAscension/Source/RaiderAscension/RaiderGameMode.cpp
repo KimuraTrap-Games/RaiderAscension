@@ -2,16 +2,19 @@
 #include "GameFramework/PlayerController.h"
 #include "RaiderPlayerState.h"
 #include "RaiderCharacter.h"
+#include "UObject/ConstructorHelpers.h"
 
 ARaiderGameMode::ARaiderGameMode()
 {
-    // Assign your custom classes in the constructor
+    // Assign your custom PlayerState
     PlayerStateClass = ARaiderPlayerState::StaticClass();
-    DefaultPawnClass = ARaiderCharacter::StaticClass();
 
-    // Set custome classes
-	PlayerStateClass = ARaiderPlayerState::StaticClass();
-	DefaultPawnClass = ARaiderCharacter::StaticClass();
+    // Load the Blueprint class for the Pawn
+    static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/Characters/BP_RaiderCharacter.BP_RaiderCharacter_C"));
+    if (PlayerPawnBPClass.Class != nullptr)
+    {
+        DefaultPawnClass = PlayerPawnBPClass.Class;
+    }
 }
 
 void ARaiderGameMode::PostLogin(APlayerController* NewPlayer)
@@ -24,7 +27,7 @@ void ARaiderGameMode::PostLogin(APlayerController* NewPlayer)
         ARaiderPlayerState* RPS = Cast<ARaiderPlayerState>(NewPlayer->GetPlayerState<ARaiderPlayerState>());
         if (RPS)
         {
-            RPS->AssignRandomRaiderGrade();  // Make sure this exists in your PlayerState
+            RPS->AssignRandomRaiderGrade();
         }
     }
 }
